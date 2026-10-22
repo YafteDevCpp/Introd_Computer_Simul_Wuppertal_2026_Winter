@@ -1,0 +1,32 @@
+%
+% Exercise 1.6: Numerically Stable Area of a Spherical Shell
+% Author : Saranraja Thiyagarajan
+% Date   : 22 / 10 / 2026 
+% 
+% 
+% Mathematical Equivalent of Surface Area 
+% A = Pi * ( (r+h)^2 - r^2 ), is Pi * ( (2 * r * h) + h^2 )
+% 
+% I'm keeping Pi * ( (r+h)^2 - r^2 ) as bad_surface_area formula, because
+% when h is very small it will become Pi * (r^2 - r^2) so area will be zero
+% that is practically impossible, so I'm taking Pi * ( (2 * r * h) + h^2 ) 
+% as good_surface_area and start computing of both 
+% whose h values are from 1 to 10^-16
+%
+% 
+% TAKE WAY : 
+%      h is goes smaller smaller we are give more error in bad_surface_area
+% when it reaches the machine epsilon we got the maximum error. and A is
+% becoming zero and relative_difference is very huge !!
+r = 1;
+disp(repmat('*', 1, 107))
+fprintf("| %23s | %23s | %23s | %23s   |\n", "A", "h", "A_alternative", "relative_difference")
+disp(repmat('*', 1, 107))
+for power = 0:1:16
+    h = 10^-power;
+    bad_surface_area = pi * ( (r+h)^2 - r^2 );
+    good_surface_area = pi * ( 2*r*h + h^2 );
+    relative_difference = abs(bad_surface_area - good_surface_area) / good_surface_area;
+    fprintf("| %23.15e | %23.15e | %23.15e |   %23.15e | \n", bad_surface_area, h, good_surface_area, relative_difference)
+end
+disp(repmat('*', 1, 107))
